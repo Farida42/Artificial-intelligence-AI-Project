@@ -1,12 +1,11 @@
-
-/* ======================================
-   Animal Identification Expert System
-   File: animal_expert.pl
-   ====================================== */
+/* ================================
+   Animal Identification System
+   Extended Version
+   ================================ */
 
 :- dynamic yes/1, no/1.
 
-/* ---------- Start System ---------- */
+/* Start System */
 
 start :-
     write('---- Animal Identification Expert System ----'), nl,
@@ -16,7 +15,9 @@ start :-
     write(Animal), nl,
     undo.
 
-/* ---------- Identification Rules ---------- */
+/* ================================
+   Main Identification Rules
+   ================================ */
 
 identify(human) :-
     chordate,
@@ -95,7 +96,9 @@ identify(spider) :-
 
 identify(unknown).
 
-/* ---------- Classification Rules ---------- */
+/* ================================
+   Classification Rules
+   ================================ */
 
 chordate :-
     has(backbone).
@@ -110,7 +113,9 @@ mammal :-
 cold_blooded :-
     has(cold_blood).
 
-/* ---------- Knowledge Checking ---------- */
+/* ================================
+   Question System
+   ================================ */
 
 has(X) :-
     yes(X),
@@ -172,22 +177,25 @@ lays_eggs :-
 lays_eggs :-
     ask(lays, eggs).
 
-/* ---------- Question System ---------- */
+/* ================================
+   Asking Questions
+   ================================ */
 
 ask(Verb, Trait) :-
     format('Does the animal ~w ~w? (yes/no): ', [Verb, Trait]),
     read(Reply),
     nl,
-    (
-        (Reply == yes ; Reply == y)
-        ->
+    ( (Reply == yes ; Reply == y)
+      ->
         assertz(yes(Trait))
-        ;
+      ;
         assertz(no(Trait)),
         fail
     ).
 
-/* ---------- Clear Memory ---------- */
+/* ================================
+   Clear Memory
+   ================================ */
 
 undo :-
     retract(yes(_)),
